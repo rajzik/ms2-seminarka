@@ -1,0 +1,10 @@
+\select@language {czech}
+\contentsline {section}{\numberline {1}Úvod}{3}
+\contentsline {section}{\numberline {2}Historie}{3}
+\contentsline {subsection}{\numberline {2.1}IEEE 802.11a}{3}
+\contentsline {subsection}{\numberline {2.2}IEEE 802.11b/g/n}{3}
+\contentsline {subsection}{\numberline {2.3}IEEE 802.11ac}{3}
+\contentsline {section}{\numberline {3}IEEE 802.11ah}{4}
+\contentsline {subsection}{\numberline {3.1}Wi-Fi v IoT}{4}
+\contentsline {subsection}{\numberline {3.2}Dostupnost}{4}
+\contentsline {section}{\numberline {4}Závěr}{4}

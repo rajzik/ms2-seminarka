@@ -1,0 +1,175 @@
+%----------------------------------------------------------------------------------------
+%	Konfigurace dokumentu
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} 
+\usepackage[T1]{fontenc} 
+\usepackage{fourier} 
+\usepackage[utf8]{inputenc}
+\usepackage[main=czech, english]{babel}
+\usepackage{amsmath,amsfonts,amsthm} 
+\usepackage{lipsum}
+\usepackage{sectsty}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{float}
+\usepackage{tabularx}
+\allsectionsfont{\centering \normalfont\scshape}
+\usepackage{fancyhdr} 
+\pagestyle{fancyplain} 
+\fancyhead{} 
+\fancyfoot[L]{}
+\fancyfoot[C]{} 
+\fancyfoot[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\headheight}{13.6pt} 
+\numberwithin{equation}{section}
+\numberwithin{figure}{section} 
+\numberwithin{table}{section}
+\setlength\parindent{0pt} 
+\usepackage[ddmmyyyy]{datetime}
+\newdate{date}{26}{09}{2017}
+\date{\displaydate{date}}
+
+\addto\captionsenglish{% Replace "english" with the language you use
+\renewcommand{\contentsname}%
+  {Obsah}%
+}
+
+%----------------------------------------------------------------------------------------
+%	Titulek
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 
+\title{	
+\normalfont \normalsize 
+\textsc{Mendelova univerzita v Brně\\Provozně ekonomická fakulta} \\ [25pt] 
+\horrule{0.5pt} \\[0.4cm] 
+\huge Modelování pokrytí terénu technologií Wi-Fi \\ % Název semestrální práce
+\horrule{2pt} \\[0.5cm] 
+}
+
+\author{Jan Šilhan} % Vaše jméno
+
+\date{\displaydate{date}} 
+
+\begin{document}
+
+\maketitle 
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	Úvod
+%----------------------------------------------------------------------------------------
+
+\section{Úvod}
+Wi-Fi je označení pro bezdrátový přenos dat. Pro přenos se používají mikrovlny, které se šíří v budovách a ve volných prostranstvích. Jelikož šíření signálu venku není velký úkol zaměříme se na pokrytí vnitřku budov. 
+Pro modelování lze použít několik softwarových řešení kde lze namodelovat budovu s překážkami. Poté lze velmi jednoduše nasimulovat sílu signálu v různých umístění. 
+Tato práce se nezabývá standarty IEEE 802.11 ani infrastruktury sítě. 
+
+
+
+\section{Přenos signálu}
+	\subsection{Útlum signálu v atmosféře}
+	Je ztráta signálu v běžných podmínkách, bez překážek. 
+	\\*	
+	Pro který se používá se následující vztah:
+	\begin{equation}
+		L_{0} = 20 * log \left(
+			\frac{4*\pi*d}
+			{\alpha}
+			\right)
+	\end{equation}
+	kde:
+	\\*
+	$L_0$ - Ztráta vlivem průchodu atmosférou; [dB]
+	\\*
+	$d$ - Vzdálenost mezi anténami; [m]
+	\\*
+	$\alpha$ - Vlnová délka; [m]
+	\subsection{Útlum signálu s překážkami}
+	Překážky jsou buď stacionární nebo pohyblivé. 
+	Útlum lze zjistit měřením a následným výpočtem. 
+	Se zvyšující se frekvencí klesá prostupnost. 
+	Proto se používá maximálně 5GHz 
+	(s výjimkou 60 GHz směrovače který je ve vývoji a vysoce experimentální).
+	\\*
+	Pro výpočet se používá následující vztah:
+	\begin{equation}
+	L = 10 * log \left(
+		\frac{P_{2}}
+		{P_{1}}
+		\right)
+	\end{equation}
+	Kde:
+	\\*
+	$L$ - Ztráty vlivem překážek; [dB]
+	\\*
+	$P_{1}$ - Výkon vyslaný; [dB]
+	\\*
+	$P_{2}$ - Výkon přijatý; [dB]
+	\newpage
+	\subsection{Výkon AP}
+		\subsubsection{Nařízení ČTÚ}
+		\begin{table}[H]
+		\centering
+		\begin{tabularx}{\linewidth}{|X|X|X|X|} 
+		\hline
+		\textcolor[rgb]{0.2,0.2,0.2}{\textbf{Kmitočtové pásmo}}             & \textcolor[rgb]{0.2,0.2,0.2}{\textbf{Vyzářený výkon}}  & \textcolor[rgb]{0.2,0.2,0.2}{\textbf{Maximální spektrální hustota EIRP}}                             & \textcolor[rgb]{0.2,0.2,0.2}{\textbf{Další podmínky}}             \\ 
+		\hline
+		\multirow{2}{*}{\textcolor[rgb]{0.2,0.2,0.2}{2400,0 - 2483,5 MHz} } & \multirow{2}{*}{\textcolor[rgb]{0.2,0.2,0.2}{100 mW} } & \textcolor[rgb]{0.2,0.2,0.2}{10 mW/1 MHz}                                                            & \textcolor[rgb]{0.2,0.2,0.2}{systémy s technikou DSSS nebo OFDM}  \\ 
+		
+																		&                                                        & \textcolor[rgb]{0.2,0.2,0.2}{100 mW/100 kHz}                                                         & \textcolor[rgb]{0.2,0.2,0.2}{systémy s technikou FHSS}            \\ 
+		\hline
+		\textcolor[rgb]{0.2,0.2,0.2}{5150 - 5250 MHz}                       & \textcolor[rgb]{0.2,0.2,0.2}{200 mW střední}           & \textcolor[rgb]{0.2,0.2,0.2}{10 mW/MHz (střední spektrální hustota v libovolném úseku širokém 1MHz)} & \textcolor[rgb]{0.2,0.2,0.2}{pouze pro použití uvnitř budovy}     \\ 
+		\hline
+		\textcolor[rgb]{0.2,0.2,0.2}{5470 - 5725 MHz}                       & \textcolor[rgb]{0.2,0.2,0.2}{1 W střední}              & \textcolor[rgb]{0.2,0.2,0.2}{50 mW/MHz (střední spektrální hustota v libovolném úseku širokém 1MHz)} & -                                                                 \\
+		\hline
+		\end{tabularx}
+		\end{table}
+
+
+
+	\subsection{Modely pro plánování vnitřních prostor}
+	Modely slouží pro predikci pokrytí uvnitř i vně. 
+	Pomáhají rozmístit přístupové body, 
+	nastavováním kanálů a výkonu.
+	\subsubsection{One-Slope model}
+	Empirický model, 
+	pro velké městské buňky, 
+	do dnes využívaný. 
+	Není náročný na zadání vstupních dat a je rychlý na výpočet. 
+	Využívá jeden útlum pro celou oblast, 
+	udávají se útlumy pro různá prostředí a frekvenční pásma.
+	\subsubsection{Multi-Wall model}
+	Je daleko složitější a potřebuje přesné rozmístění příček na patrech i s jejich útlumem. 
+	Ovšem tento model je úměrně složitý k výstupu. 
+	Omezení tohoto modelu je že nelze simulovat vlnovodný efekt v dlouhých a zahnutých chodbách.
+\newpage
+
+\section{Softwarové řešení}
+Řešení pro simulaci šíření není mnoho, 
+jeden z nich je I-pro který však potřebuje přídavný hardware pro měření. 
+Návrh rozložení přístupových bodů je stále složitý, 
+ale tento software pomůže jak s rozložením, 
+tak rozvrhnutím kanálů.
+
+\section{Závěr}
+Modelování pokrytí terénu není jednoduchá disciplína, 
+je zde neuvěřitelné množství překážek se kterými je nutno se vypořádat. 
+Venkovní pokrytí je jednoduší z několika důvodů, 
+například daleko méně překážek, 
+ale jsou zde jiné těžkosti. 
+Jelikož města a celkově česká republika nemá regulované pásmo 
+a poskytovatelé si mohou vybírat kanály které obsadí je zde velké rušení, 
+Brno je toho velkým příkladem. 
+Model uvnitř budov je komplexnější a je zde mnoho možností pochybení. 
+Které může začínat výběrem špatného zařízení a končit slepými místy bez signálu. 
+Simulace nejsou přesné a vždy je nutná korektura v reálu.
+\end{document}
